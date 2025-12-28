@@ -1,0 +1,12 @@
+{
+  "name": "Qaysar Pizza",
+  "short_name": "Qaysar",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#FFFAF0",
+  "theme_color": "#047454",
+  "icons": [
+    { "src": "images/android-chrome-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "images/android-chrome-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

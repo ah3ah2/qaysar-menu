@@ -1,0 +1,40 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="260" height="200" viewBox="0 0 260 200">
+  <!-- white background -->
+  <rect width="260" height="200" fill="#ffffff"/>
+
+  <defs>
+    <style>
+      .line{fill:none;stroke:#d3d7dc;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+      .pizza{fill:#f4c95d}
+      .pep{fill:#e85d4f}
+      .accent{stroke:#9ad0c2}
+    </style>
+  </defs>
+
+  <!-- playful L -->
+  <path class="line accent" d="M24 28v28h28"/>
+  <path class="line accent" d="M24 28h28"/>
+
+  <!-- pizza slice 1 -->
+  <g transform="translate(90,18) rotate(-22)">
+    <path class="line" d="M10 8 L58 22 L28 66 Z"/>
+    <circle class="pep" cx="30" cy="34" r="3"/>
+    <circle class="pep" cx="36" cy="42" r="3"/>
+    <circle class="pep" cx="22" cy="40" r="3"/>
+  </g>
+
+  <!-- pizza slice 2 (smaller, playful rotation) -->
+  <g transform="translate(170,110) rotate(18) scale(.9)">
+    <path class="line" d="M10 8 L52 18 L26 58 Z"/>
+    <circle class="pep" cx="26" cy="30" r="2.6"/>
+    <circle class="pep" cx="32" cy="38" r="2.6"/>
+  </g>
+
+  <!-- dots for fun -->
+  <circle cx="200" cy="36" r="2" fill="#f4c95d"/>
+  <circle cx="48" cy="150" r="2" fill="#9ad0c2"/>
+  <circle cx="128" cy="172" r="2" fill="#e85d4f"/>
+
+  <!-- tiny zigzag -->
+  <path class="line" d="M150 60 l6 6 l6 -6 l6 6"/>
+</svg>

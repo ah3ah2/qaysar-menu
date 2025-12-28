@@ -1,0 +1,578 @@
+:root{
+  --red:#d33026;
+  --green:#047454;
+  --cream:#FFFFE0;
+
+  --text:#111;
+  --muted:rgba(17,17,17,.7);
+  --line:rgba(17,17,17,.14);
+  --shadow:0 12px 30px rgba(0,0,0,.18);
+  --radius:16px;
+
+  /* ✅ Pattern controls */
+  --pattern-url: url("images/bg-pattern.svg");
+  --pattern-size: 280px;     /* حجم التكرار */
+  --pattern-opacity: .44;    /* ✅ أقوى من قبل (كانت .22) */
+}
+
+*{box-sizing:border-box}
+
+body{
+  margin:0;
+  font-family:Arial,sans-serif;
+  background:#fff;           /* ✅ خلفية بيضا */
+  color:var(--green);
+  min-height:100vh;
+  overflow-x:hidden;         /* ✅ يمنع تداخل/سكرول أفقي على التلفون */
+}
+
+/* ✅ Playful repeating background pattern */
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+
+  background-image: var(--pattern-url);
+  background-repeat: repeat;
+  background-position: center;
+  background-size: var(--pattern-size);
+
+  /* ✅ خلي الألوان أقوى + playful */
+  filter: saturate(1.35) contrast(1.15);
+  opacity: var(--pattern-opacity);
+
+  pointer-events:none;
+  z-index:0;
+}
+
+/* Keep everything above the background */
+body > *{position:relative; z-index:1;}
+
+/* Fixed corner logo */
+.cornerLogo{
+  position:fixed;
+  top:10px;
+  right:12px;
+  z-index:10001;
+  display:inline-flex;
+  text-decoration:none;
+}
+.cornerLogo img{
+  height:54px;
+  width:auto;
+  filter:drop-shadow(0 8px 18px rgba(0,0,0,.25));
+}
+@media (max-width:768px){
+  .cornerLogo img{height:46px;}
+}
+
+/* Intro */
+#introLogo{
+  position:fixed; inset:0;
+  background:#070810;
+  display:flex; align-items:center; justify-content:center;
+  z-index:10000;
+  pointer-events:none;
+  animation:introFade 5s ease forwards;
+}
+#introLogo video{width:100%;height:100%;object-fit:cover;}
+@keyframes introFade{to{opacity:0;visibility:hidden}}
+
+/* Top Banner */
+.topBanner{
+  background:#FFFFE0;
+  border-bottom:1px solid rgba(4,116,84,.18);
+  padding:8px 12px;
+  position:sticky;
+  top:0;
+  z-index:60;
+  backdrop-filter:blur(6px);
+}
+.bannerLeft{display:flex;justify-content:center;}
+.topPill{
+  width:min(96%,1200px);
+  background:rgba(245,255,250,.82);  /* ✅ شفافه أكثر من قبل */
+  border-radius:999px;
+  padding:10px 12px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+  box-shadow:0 10px 24px rgba(0,0,0,.08);
+  flex-wrap:wrap;
+  backdrop-filter: blur(6px);        /* ✅ زجاج */
+}
+.topPill > *{white-space:nowrap;}
+
+/* Search */
+.searchWrap{position:relative;display:flex;align-items:center;}
+.searchIcon{
+  position:absolute;
+  inset-inline-start:10px;
+  width:18px;height:18px;
+  display:flex;align-items:center;justify-content:center;
+  pointer-events:none;
+  color:var(--green);
+}
+.searchIcon svg{
+  width:100%;height:100%;
+  stroke:currentColor;
+  stroke-width:3.2;
+  fill:none;
+  stroke-linecap:round;
+  stroke-linejoin:round;
+  opacity:1;
+}
+.searchBox{
+  width:min(72vw, 260px);
+  height:38px;
+  border-radius:12px;
+  border:1px solid rgba(4,116,84,.22);
+  padding-inline-start:38px;
+  padding-inline-end:12px;
+  outline:none;
+  font-weight:800;
+  color:var(--green);
+  background:rgba(255,255,255,.60);  /* ✅ شفاف أكثر */
+  backdrop-filter: blur(4px);
+}
+.searchBox::placeholder{color:rgba(4,116,84,.65);}
+
+/* Buttons & dropdowns */
+.dropWrap{position:relative}
+.dropBtn,.langBtn{
+  background:rgba(255,255,255,.60);  /* ✅ شفاف أكثر */
+  border:1px solid rgba(4,116,84,.22);
+  color:var(--green);
+  padding:8px 12px;
+  border-radius:12px;
+  cursor:pointer;
+  font-weight:900;
+  backdrop-filter: blur(4px);
+}
+.dropBtn .chev{opacity:.85}
+
+.dropMenu{
+  position:absolute;
+  top:44px;
+  inset-inline-start:0;
+  min-width:min(92vw, 320px);
+  background:rgba(255,255,255,.78);  /* ✅ بدل الأبيض الصافي */
+  color:var(--green);
+  border-radius:14px;
+  box-shadow:var(--shadow);
+  padding:10px;
+  z-index:70;
+  backdrop-filter: blur(8px);
+}
+@media (max-width:520px){
+  .dropMenu{inset-inline-start:50%;transform:translateX(-50%);}
+}
+
+.dropTitle{font-weight:900;margin-bottom:8px;color:var(--green)}
+.dropList{
+  margin:0;
+  padding:0;
+  list-style:none;
+  max-height:320px;
+  overflow:auto;
+}
+.dropList li{margin:6px 0;line-height:1.35}
+
+/* ===== Branch row (name + pin button + expandable map) ===== */
+.branchRow{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+}
+.branchRow .locLink,
+.branchRow .locText{
+  flex:1;
+}
+.locText{
+  font-weight:900;
+  color:var(--green);
+}
+.miniMapBtn{
+  width:34px;
+  height:34px;
+  border-radius:10px;
+  border:1px solid rgba(4,116,84,.22);
+  background:rgba(255,255,255,.60); /* ✅ شفاف أكثر */
+  cursor:pointer;
+  font-size:16px;
+  line-height:1;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  backdrop-filter: blur(4px);
+}
+.miniMapWrap{
+  width:100%;
+  margin-top:8px;
+  border-radius:12px;
+  overflow:hidden;
+  border:1px solid rgba(0,0,0,.08);
+  background:rgba(255,255,255,.85);
+}
+.miniMapWrap iframe{
+  width:100%;
+  height:150px;
+  border:0;
+  display:block;
+}
+@media (max-width:520px){
+  .miniMapBtn{ margin-inline-start:auto; }
+}
+
+.locLink{
+  color:var(--green);
+  text-decoration:none;
+  font-weight:900;
+  display:block;
+  padding:8px 10px;
+  border-radius:10px;
+  background:rgba(255,255,255,.12); /* ✅ أخف */
+}
+.locLink:hover{background:rgba(255,255,255,.20);}
+
+/* Map icon */
+.mapIcon{display:inline-flex;width:16px;height:16px;margin-inline-end:6px;vertical-align:middle;}
+.mapIcon svg{width:100%;height:100%;fill:currentColor;}
+
+/* Building icon (dine-in branches) */
+.bldIcon{display:inline-flex;width:16px;height:16px;margin-inline-end:6px;vertical-align:middle;}
+.bldIcon svg{width:100%;height:100%;fill:currentColor;}
+
+/* Slider */
+.slider{max-width:1040px;margin:18px auto 8px;padding:16px 16px 0;}
+.slides{
+  width:min(92%, 1040px);
+  height:420px;              /* ✅ ارتفاع ثابت للبانر */
+  border-radius:18px;
+  overflow:hidden;
+  margin:0 auto;
+  position:relative;
+}
+
+.slide{
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+
+  /* ✅ هذا المهم */
+  object-fit:cover;          /* الصورة تملى البانر */
+  object-position:center;    /* تركيز من النص */
+
+  opacity:0;
+  transition:opacity .35s ease;
+}
+
+.slide.active{
+  opacity:1;
+}
+
+
+/* Tabs */
+.tabs{
+  max-width:1100px;
+  margin:18px auto 0;
+  padding:0 16px;
+  display:flex;
+  gap:10px;
+  justify-content:center;
+  flex-wrap:wrap;
+}
+.tab{
+  background:rgba(255,255,255,.60); /* ✅ شفاف أكثر */
+  border:1px solid var(--line);
+  padding:9px 14px;
+  border-radius:999px;
+  cursor:pointer;
+  font-weight:900;
+  color:var(--green);
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  backdrop-filter: blur(4px);
+}
+.tab.active{background:var(--red);color:#fff;border-color:var(--red);}
+
+/* ✅ Keep tab icons green (even when active) */
+.tab .tabIcon{color:var(--green);}
+
+/* Tab icon */
+.tabIcon{display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;}
+.tabIcon svg{width:16px;height:16px;fill:currentColor;}
+
+/* A small professional badge behind the icon */
+.tabIconBadge{
+  width:22px;
+  height:22px;
+  border-radius:999px;
+  background:rgba(4,116,84,.12);
+  box-shadow:inset 0 0 0 1px rgba(4,116,84,.18);
+  flex:0 0 22px;
+}
+
+/* Stroke-style icons (green outlines) */
+.tabIconStroke svg{fill:none;stroke:currentColor;}
+.tabIconStroke svg *{fill:none;stroke:currentColor;}
+
+/* ✅ Gallery container (شفاف أكثر) */
+.container{
+  max-width:1100px;
+  margin:14px auto 80px;
+  padding:14px 16px 22px;
+
+  /* ⬇️ الشكل فقط */
+  background:rgba(255,255,255,.06); /* شبه شفاف */
+  border-radius:18px;
+  box-shadow:none;
+  backdrop-filter:none;
+}
+
+
+.gallery{
+  display:grid;
+  grid-template-columns:repeat(3, 1fr);
+  gap:14px;
+}
+@media (max-width:980px){ .gallery{grid-template-columns:repeat(2,1fr);} }
+@media (max-width:560px){ .gallery{grid-template-columns:1fr;} }
+
+/* ✅ Card container (شفاف أكثر) */
+.card{
+  /* لون خلفية الكاردات (بدون ما نأثر على الصور) */
+  background:#fffbea;
+  border-radius:16px;
+  overflow:hidden;
+  transition:transform .25s ease, box-shadow .25s ease;
+  display:flex;
+  flex-direction:column;
+  padding:12px;
+  min-height:220px;
+  cursor:pointer;
+  border:1px solid rgba(0,0,0,.05);
+  backdrop-filter: blur(4px);
+}
+.card:hover{transform:translateY(-3px);box-shadow:0 14px 30px rgba(0,0,0,.14);}
+
+/* ❌ لا نغير شفافيه الصورة نفسها */
+.card img{
+  width:100%;
+  height:170px;
+  object-fit:contain;
+  border-radius:12px;
+  background:rgba(255,255,255,.18);
+}
+
+.cardName{
+  text-align:center;
+  padding:10px 6px 0;
+  font-weight:900;
+  color:var(--green);
+}
+
+/* price line */
+.cardPrice{
+  text-align:center;
+  margin-top:6px;
+  font-weight:900;
+  font-size:14px;
+  color:rgba(4,116,84,.92);
+}
+
+/* smaller drink cards */
+.card.drink{
+  padding:10px;
+  min-height:170px;
+}
+.card.drink img{height:115px;}
+.card.drink .cardName{padding-top:8px;font-size:14px;}
+.card.drink .cardPrice{font-size:13px;}
+
+/* Modal */
+.sidebarOverlay{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,.65);
+  backdrop-filter:blur(6px);
+  z-index:100;
+  opacity:0; visibility:hidden;
+  transition:opacity .25s ease, visibility .25s ease;
+}
+body.bar-open .sidebarOverlay{opacity:1;visibility:visible}
+
+.pizzaSidebar{
+  position:fixed;
+  top:50%; left:50%;
+  transform:translate(-50%,-50%) scale(.92);
+  z-index:101;
+  width:min(860px, 92vw);
+  opacity:0; visibility:hidden;
+  transition:transform .28s ease, opacity .25s ease, visibility .25s ease;
+}
+body.bar-open .pizzaSidebar{
+  opacity:1; visibility:visible;
+  transform:translate(-50%,-50%) scale(1);
+}
+.sidebarContent{
+  position:relative;
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:14px;
+  background:rgba(255,255,255,.92);
+  border-radius:20px;
+  box-shadow:0 20px 60px rgba(0,0,0,.45);
+  padding:14px;
+  backdrop-filter: blur(8px);
+}
+@media (max-width:900px){ .sidebarContent{grid-template-columns:1fr;} }
+.closeSidebar{
+  position:absolute;
+  top:10px; inset-inline-end:10px;
+  width:42px;height:42px;
+  border-radius:50%;
+  border:none;
+  background:rgba(0,0,0,.06);
+  font-size:30px;
+  cursor:pointer;
+}
+.sidebarImage{
+  border-radius:16px;
+  background:linear-gradient(180deg, rgba(211,48,38,0.05), rgba(4,116,84,0.05));
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:10px;
+  min-height:300px;
+}
+.sidebarImage img{
+  width:100%;
+  height:100%;
+  max-height:520px;
+  object-fit:contain;
+  border-radius:14px;
+}
+.sidebarInfo{padding:6px 4px}
+.sidebarName{font-size:22px;font-weight:900;color:var(--green);}
+.sidebarPrice{
+  margin-top:6px;
+  font-weight:900;
+  color:var(--red);
+}
+.sidebarDesc{margin-top:10px;font-size:15px;line-height:1.6;color:rgba(4,116,84,.9);}
+
+/* Footer */
+.bottomFooter{position:fixed;bottom:18px;left:18px;z-index:10000;}
+.socialIcons{display:flex;flex-direction:column;gap:12px;align-items:flex-start;}
+.socialIcon{
+  width:50px;height:50px;
+  background:#fff;border-radius:14px;
+  display:flex;align-items:center;justify-content:center;
+  text-decoration:none;
+  transition:transform .2s ease;
+  box-shadow:0 6px 18px rgba(0,0,0,.28);
+  color:var(--green);
+}
+.socialIcon:hover{transform:scale(1.12);}
+.socialIcon svg{width:24px;height:24px}
+.socialIcon.facebook{color:#1877F2;}
+.socialIcon.whatsapp{color:#25D366;}
+@media (max-width:768px){
+  .bottomFooter{bottom:14px;left:14px}
+  .socialIcon{width:46px;height:46px}
+  .socialIcon svg{width:20px;height:20px}
+}
+
+/* Active red state */
+.topPill .dropBtn.active,
+.topPill .langBtn.active{
+  background:var(--red);
+  color:#fff;
+  border-color:var(--red);
+}
+
+/* =========================================================
+   ✅ Mobile-first polish (Web + Phone)
+   هدفها: ما يصير تداخل/تكسير عناصر لما نفتح على التلفون
+   ========================================================= */
+
+@media (max-width: 720px){
+  /* Reduce fixed corner logo so it doesn't cover banner */
+  .cornerLogo{top:8px; right:10px;}
+  .cornerLogo img{height:42px;}
+
+  /* Banner becomes a neat stack */
+  .topPill{
+    width:100%;
+    border-radius:18px;
+    padding:12px;
+    gap:10px;
+    justify-content:flex-start;
+  }
+
+  /* Search takes a full row */
+  .searchWrap{
+    width:100%;
+    flex:1 1 100%;
+  }
+  .searchBox{
+    width:100%;
+    max-width:none;
+  }
+
+  /* Buttons & dropdowns align nicely */
+  .dropWrap{flex:1 1 100%; width:100%;}
+  .dropBtn,.langBtn{
+    width:100%;
+    justify-content:center;
+  }
+
+  /* Slider height adapts on phones */
+  .slides{height:260px;}
+}
+
+@media (max-width: 560px){
+  .cornerLogo{top:6px; right:8px;}
+  .cornerLogo img{height:38px;}
+
+  /* Tabs: make them scroll horizontally instead of wrapping into many lines */
+  .tabs{
+    justify-content:flex-start;
+    flex-wrap:nowrap;
+    overflow-x:auto;
+    overflow-y:hidden;
+    -webkit-overflow-scrolling:touch;
+    padding-bottom:10px;
+    scrollbar-width:none; /* Firefox */
+  }
+  .tabs::-webkit-scrollbar{display:none;} /* Chrome/Safari */
+  .tab{flex:0 0 auto;}
+
+  /* Reduce slider a bit more */
+  .slides{height:220px;}
+
+  /* Footer icons: make them row so they don't cover cards */
+  .bottomFooter{
+    left:50%;
+    transform:translateX(-50%);
+    bottom:10px;
+  }
+  .socialIcons{
+    flex-direction:row;
+    gap:10px;
+    align-items:center;
+  }
+}
+
+@media (max-width: 420px){
+  .slides{height:200px;}
+
+  /* Modal spacing on very small devices */
+  .pizzaSidebar{width:94vw;}
+  .sidebarContent{padding:12px;}
+  .sidebarImage{min-height:220px;}
+}
